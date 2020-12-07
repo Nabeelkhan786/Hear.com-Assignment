@@ -1,0 +1,134 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global"  extensible="true">
+    
+    
+    <aura:attribute name="progressIndicatorFlag" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:attribute name="gridData" type="Object"/> 
+    <lightning:recordEditForm aura:id="accountRecordCreator" 
+                              onsuccess="{!c.handleSuccess}"
+                              objectApiName="Battle_Station__c">
+        <lightning:messages />
+        
+       Task two 
+        <div class="slds-box">
+            
+            <lightning:progressIndicator type="path" currentStep="{!v.progressIndicatorFlag}">
+                <lightning:progressStep label="Hearing aid selection" value="step1"/>
+                <lightning:progressStep label="EarMold" value="step2"/>
+                <lightning:progressStep label="Accessory Selection" value="step3"/>
+                <lightning:progressStep label="Check Order" value="step4"/>
+                <lightning:progressStep label="Order Completed" value="step5"/>
+            </lightning:progressIndicator>
+            
+            <div aura:id="stepOne">
+                <div class="slds-p-vertical_medium">
+                    <div class="slds-grid container slds-p-vertical_medium">
+                      <div class="slds-col slds-large-size--10-of-12"> 
+                           <lightning:input 
+                            name="search__hearingAid"
+                            label=""
+                            type="search"
+                            variant="label-hidden"                
+                    		/>
+
+                        </div>
+                      <div class="slds-col slds-large-size--1-of-12 slds-container--right ">
+                           <lightning:button  label="Search"  variant="brand"/> 
+                        </div>
+                    </div>
+                                       
+                    <div class="slds">
+                        <table class="slds-table slds-table--bordered">    	
+                            <thead>
+                                <tr class="slds-text-heading--label">            	
+                                    <aura:iteration items="{!v.gridData.headers}" var="col">                     
+                                        <th class="{!col.cssClass}"> {!col.title} </th>  
+                                    </aura:iteration>                
+                                </tr>        	 
+                            </thead>
+                            <tbody>
+                                
+                                <aura:iteration items="{!v.gridData.rows}" var="row">
+                                    
+                                    <tr class="slds-hint-parent"> 
+                                        <aura:iteration items="{!row.vals}" var="col" indexVar="idx">                         
+                                            <td class="{!col.cssClass}">{!col.val}</td> 
+                                        </aura:iteration>
+                                        <td><lightning:button  iconName="utility:check"  class="addtoCardButton" label="Add to order"/></td>
+                                    </tr>
+                                </aura:iteration>              
+                            </tbody>    
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-grid slds-grid--align-spread">
+                    <div class="slds-col--padded">
+                        <div class="articleCount">
+                        	<lightning:icon iconName="utility:cart" alternativeText="cart" title="cart" size="x-small" /> (4) Article
+                        </div>
+                    </div>
+                    <lightning:button class="slds-col--padded continueButton" label="Continue" onclick="{!c.goToStepTwo}" variant="brand"/>
+                </div>
+            </div>
+            <div aura:id="stepTwo">
+                <div class="slds-p-vertical_medium">
+                    <lightning:inputField fieldName="Project_Status__c" />
+                    
+                </div>
+                <section class="slds-clearfix">
+                    <div class="slds-float--right">
+                        <lightning:button class="backButton" label="Back" onclick="{!c.goBackToStepOne}" />
+                        <lightning:button class=" continueButton" label="Continue" onclick="{!c.goToStepThree}" variant="brand"/> 
+                    </div>
+                </section>
+                
+            </div>
+            <div aura:id="stepThree">
+                <div class="slds-p-vertical_medium">
+                    <lightning:inputField fieldName="Weapons_Status__c" />
+                </div>
+                <section class="slds-clearfix">
+                    <div class="slds-float--right">
+                        <lightning:button class="backButton" label="Back" onclick="{!c.goBackToStepTwo}"/>
+                        <lightning:button class=" continueButton" label="Continue" onclick="{!c.goToStepFour}" variant="brand"/> 
+                    </div>
+                </section>
+                
+            </div>
+            <div aura:id="stepFour">
+                <div class="slds-p-vertical_medium">
+                    <lightning:inputField fieldName="Project_Status__c" />
+                </div>
+                <section class="slds-clearfix">
+                    <div class="slds-float--right">
+                        <lightning:button class="backButton" label="Back" onclick="{!c.goBackToStepThree}" />
+                        <lightning:button class=" continueButton" label="Continue" onclick="{!c.goToStepFive}" variant="brand"/> 
+                    </div>
+                </section>
+                
+            </div>
+            <div aura:id="stepFive">
+                <div class="slds-p-vertical_medium">
+                    <lightning:inputField fieldName="Weapons_Status__c" />
+                </div>
+                <section class="slds-clearfix">
+                    <div class="slds-float--right">
+                        <lightning:button class="backButton" label="Back" onclick="{!c.goBackToStepFour}"/>
+                        <lightning:button class=" continueButton" label="Save" type="submit" variant="brand"/> 
+                    </div>
+                </section>
+                
+            </div>
+            
+            
+            
+            
+            
+            
+        </div>
+        
+    </lightning:recordEditForm>
+    
+    
+</aura:component>
